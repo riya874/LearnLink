@@ -1,0 +1,67 @@
+.about-us-page {
+    background-color: #f0f8ff; /* Light blue background */
+    font-family: "Poppins", sans-serif;
+    color: #333; /* Dark text for readability */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .glass-container {
+    background: rgba(255, 255, 255, 0.3); /* Glass effect */
+    backdrop-filter: blur(10px); /* Blur effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 40px;
+    max-width: 1000px;
+    text-align: center;
+    animation: fadeIn 2.5s ease-in-out;
+  }
+  
+  /* .about-logo {
+    width: 120px;
+    margin-bottom: 20px; */
+    .about-logo {
+      width: 120px;
+      margin: 0 auto 20px; /* Centers the image horizontally */
+      display: block; /* Ensures it behaves properly */
+    }
+    
+  
+  
+  .about-title {
+    font-size: 36px;
+    font-weight: bold;
+    color:#444; /* Darker text */
+    margin-bottom: 10px;
+    font-family:Lobster, cursive;
+  }
+  
+  .about-tagline {
+    font-size: 18px;
+    color: #444; /* Slightly lighter */
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  
+  .about-description-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  /* Animation keyframes */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
