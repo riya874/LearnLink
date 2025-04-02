@@ -45,22 +45,31 @@ const ParentManagement = () => {
                 {parents.length > 0 ? (
                     <div className="space-y-4">
                         {parents.map((parent) => (
-                            <div key={parent._id} className="p-4 border rounded-lg bg-white shadow-md flex justify-between items-center">
+                            <div
+                                key={parent._id}
+                                className="p-4 border rounded-lg bg-white shadow-md flex justify-between items-center"
+                            >
                                 <div className="flex items-center">
+                                    {/* Check if userId and profilePhoto are available */}
                                     <img
-                                        src={parent.userId.profilePhoto} // Ensure you have the profile photo URL from the backend
-                                        alt={`${parent.username}'s profile`}
+                                        src={parent.userId?.profilePhoto || "https://via.placeholder.com/150"} // Fallback image if profilePhoto is not available
+                                        alt={`${parent.userId?.username || "Unknown"}'s profile`}
                                         className="w-12 h-12 rounded-full mr-4"
                                     />
                                     <div>
-                                        <span className="text-lg font-semibold">{parent.userId.username}</span>
-                                        <p className="text-sm text-gray-600">{parent.userId.email}</p>
-                                        <p className="text-sm text-gray-600">{parent.userId.role}</p>
+                                        {/* Check if username is available */}
+                                        <span className="text-lg font-semibold">
+                                            {parent.userId?.username || "Unknown User"}
+                                        </span>
+                                        {/* Check if email is available */}
+                                        <p className="text-sm text-gray-600">
+                                            {parent.userId?.email || "Email not available"}
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="flex space-x-4">
                                     <button
-                                        onClick={() => deleteUser(parent._id)}
+                                        onClick={() => deleteParent(parent._id)}
                                         className="text-red-500 hover:text-red-600 transition"
                                     >
                                         <FaTrashAlt />

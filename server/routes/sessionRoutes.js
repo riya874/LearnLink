@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authenticate = require('../middlewares/authMiddleware');
-const { cancelSession, rescheduleSession, bookSession, getSessionsByParent, getSessionsByTutor } = require('../controllers/sessionController');
-
-
+const { cancelSession, rescheduleSession, bookSession, getSessionsByParent, getSessionsByTutor, getAllSessionsForTutor } = require('../controllers/sessionController');
 // BOOK SESSION
 router.post("/book", bookSession);
 
@@ -19,4 +17,5 @@ router.get('/parent/:parentId', getSessionsByParent);
 // GET ALL SESSIONS FOR A SPECIFIC TUTOR
 router.get('/tutor/:tutorId', getSessionsByTutor);
 
+router.get('/all', getAllSessionsForTutor);
 module.exports = router;

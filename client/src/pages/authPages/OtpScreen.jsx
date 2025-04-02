@@ -1,302 +1,3 @@
-// import React, { useState, useRef, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { selectUserEmail, selectUserRole } from "../../redux/features/auth/authSlice";
-// import client from "../../lib/axios";
-// import TutorImage from '../../assets/logo.png';
-// import { toast } from "react-hot-toast";
-
-// const OtpScreen = () => {
-//     const email = useSelector(selectUserEmail);
-//     const role = useSelector(selectUserRole);
-//     const [otp, setOtp] = useState(["", "", "", ""]);
-//     const [loading, setLoading] = useState(false);
-//     const [resend, setResend] = useState(false);
-//     const inputRefs = useRef([]);
-//     const navigate = useNavigate();
-
-//     useEffect(() => {
-//         inputRefs.current[0]?.focus();
-//     }, []);
-
-//     const handleOtpChange = (value, index) => {
-//         if (!/^\d*$/.test(value)) return; // Prevent non-numeric input
-//         const newOtp = [...otp];
-//         newOtp[index] = value.slice(-1); // Only allow 1 digit
-//         setOtp(newOtp);
-
-//         if (value && index < 3) {
-//             inputRefs.current[index + 1]?.focus();
-//         }
-//     };
-
-//     const handleKeyDown = (index, e) => {
-//         if (e.key === "Backspace" && !otp[index] && index > 0) {
-//             inputRefs.current[index - 1]?.focus();
-//         }
-//     };
-
-//     useEffect(() => {
-//         if (otp.every((digit) => digit !== "")) {
-//             setTimeout(handleVerifyOtp, 500); // Debounce auto-submit
-//         }
-//     }, [otp]);
-
-//     const handleVerifyOtp = async () => {
-//         const otpString = otp.join('');
-//         if (otpString.length !== 4) {
-//             toast.error("Please enter a valid 4-digit OTP");
-//             return;
-//         }
-
-//         setLoading(true);
-//         try {
-//             const token = localStorage.getItem('authToken');
-//             const response = await client.post("/auth/verify-email", { role, otp: otpString }, {
-//                 headers: { Authorization: `Bearer ${token}` },
-//             });
-
-//             if (response.data.success) {
-//                 toast.success("OTP verified successfully!");
-//                 navigate('/tutordashboard');
-//             } else {
-//                 toast.error("Invalid OTP. Please try again.");
-//             }
-//         } catch (error) {
-//             toast.error(error.response?.data?.message || "An error occurred.");
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     const handleResendOtp = async () => {
-//         setResend(true);
-//         try {
-//             const token = localStorage.getItem('authToken');
-//             const response = await client.post("/auth/resend-otp", { role }, {
-//                 headers: { Authorization: `Bearer ${token}` }
-//             });
-
-//             response.data.success
-//                 ? toast.success("OTP resent successfully!")
-//                 : toast.error("Error: Please try again.");
-//         } catch (error) {
-//             toast.error(error.response?.data?.message || "An error occurred.");
-//         } finally {
-//             setResend(false);
-//         }
-//     };
-
-//     return (
-//         <div className="min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${TutorImage})` }}>
-//             <div className="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
-//                 <div className="flex flex-col items-center bg-gray-900 text-white rounded-xl shadow-lg w-full max-w-md p-8 m-10">
-//                     <h1 className="text-2xl font-semibold mb-6">Enter OTP</h1>
-//                     <p className="text-gray-400 text-center mb-8">
-//                         We have sent a 4-digit OTP to your email: <strong>{email}</strong>
-//                     </p>
-
-//                     <div className="flex space-x-2 mb-6">
-//                         {otp.map((digit, index) => (
-//                             <input
-//                                 key={index}
-//                                 type="text"
-//                                 inputMode="numeric"
-//                                 pattern="\d*"
-//                                 className="w-16 h-16 text-center text-2xl bg-gray-700 text-white rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-//                                 maxLength="1"
-//                                 value={digit}
-//                                 onChange={(e) => handleOtpChange(e.target.value, index)}
-//                                 onKeyDown={(e) => handleKeyDown(index, e)}
-//                                 ref={(ref) => (inputRefs.current[index] = ref)}
-//                             />
-//                         ))}
-//                     </div>
-
-//                     <button
-//                         onClick={handleVerifyOtp}
-//                         disabled={loading}
-//                         className={`w-full py-3 mt-6 bg-indigo-600 text-white rounded-md font-semibold text-lg ${
-//                             loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'
-//                         } transition`}
-//                     >
-//                         {loading ? 'Verifying...' : 'Verify OTP'}
-//                     </button>
-
-//                     <button
-//                         onClick={handleResendOtp}
-//                         className="mt-4 text-indigo-400 hover:text-indigo-600 transition"
-//                         disabled={resend}
-//                     >
-//                         {resend ? 'Wait...' : 'Resend OTP'}
-//                     </button>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default OtpScreen;
-
-
-// import React, { useState, useRef, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { selectUserEmail, selectUserRole } from "../../redux/features/auth/authSlice";
-// import client from "../../lib/axios";
-// import TutorImage from "../../assets/logo.png";
-// import { toast } from "react-hot-toast";
-
-// const OtpScreen = () => {
-//     const email = useSelector(selectUserEmail);
-//     const role = useSelector(selectUserRole);
-//     const [otp, setOtp] = useState(["", "", "", ""]);
-//     const [loading, setLoading] = useState(false);
-//     const [resend, setResend] = useState(false);
-//     const inputRefs = useRef([]);
-//     const navigate = useNavigate();
-
-//     useEffect(() => {
-//         inputRefs.current[0]?.focus();
-//     }, []);
-
-//     const handleOtpChange = (value, index) => {
-//         if (!/^\d*$/.test(value)) return; // Prevent non-numeric input
-//         const newOtp = [...otp];
-//         newOtp[index] = value.slice(-1); // Only allow 1 digit
-//         setOtp(newOtp);
-
-//         if (value && index < 3) {
-//             inputRefs.current[index + 1]?.focus();
-//         }
-//     };
-
-//     const handleKeyDown = (index, e) => {
-//         if (e.key === "Backspace" && !otp[index] && index > 0) {
-//             inputRefs.current[index - 1]?.focus();
-//         }
-//     };
-
-//     useEffect(() => {
-//         if (otp.every((digit) => digit !== "")) {
-//             setTimeout(handleVerifyOtp, 500); // Debounce auto-submit
-//         }
-//     }, [otp]);
-
-//     const handleVerifyOtp = async () => {
-//         const otpString = otp.join('');
-//         if (otpString.length !== 4) {
-//             toast.error("Please enter a valid 4-digit OTP");
-//             return;
-//         }
-
-//         setLoading(true);
-//         try {
-//             const token = localStorage.getItem("authToken");
-//             const response = await client.post(
-//                 "/auth/verify-email",
-//                 { role, otp: otpString },
-//                 { headers: { Authorization: `Bearer ${token}` } }
-//             );
-
-//             if (response.data.success) {
-//                 toast.success("OTP verified successfully!");
-
-//                 // Redirect based on user role
-//                 const dashboardPath =
-//                     role === "admin"
-//                         ? "/admindashboard"
-//                         : role === "parent"
-//                         ? "/parentdashboard"
-//                         : "/tutordashboard";
-
-//                 navigate(dashboardPath);
-//             } else {
-//                 toast.error("Invalid OTP. Please try again.");
-//             }
-//         } catch (error) {
-//             toast.error(error.response?.data?.message || "An error occurred.");
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     const handleResendOtp = async () => {
-//         setResend(true);
-//         try {
-//             const token = localStorage.getItem("authToken");
-//             const response = await client.post(
-//                 "/auth/resend-otp",
-//                 { role },
-//                 { headers: { Authorization: `Bearer ${token}` } }
-//             );
-
-//             response.data.success
-//                 ? toast.success("OTP resent successfully!")
-//                 : toast.error("Error: Please try again.");
-//         } catch (error) {
-//             toast.error(error.response?.data?.message || "An error occurred.");
-//         } finally {
-//             setResend(false);
-//         }
-//     };
-
-//     return (
-//         <div
-//             className="min-h-screen bg-cover bg-center"
-//             style={{ backgroundImage: `url(${TutorImage})` }}
-//         >
-//             <div className="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
-//                 <div className="flex flex-col items-center bg-gray-900 text-white rounded-xl shadow-lg w-full max-w-md p-8 m-10">
-//                     <h1 className="text-2xl font-semibold mb-6">Enter OTP</h1>
-//                     <p className="text-gray-400 text-center mb-8">
-//                         We have sent a 4-digit OTP to your email: <strong>{email}</strong>
-//                     </p>
-
-//                     <div className="flex space-x-2 mb-6">
-//                         {otp.map((digit, index) => (
-//                             <input
-//                                 key={index}
-//                                 type="text"
-//                                 inputMode="numeric"
-//                                 pattern="\d*"
-//                                 className="w-16 h-16 text-center text-2xl bg-gray-700 text-white rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-//                                 maxLength="1"
-//                                 value={digit}
-//                                 onChange={(e) => handleOtpChange(e.target.value, index)}
-//                                 onKeyDown={(e) => handleKeyDown(index, e)}
-//                                 ref={(ref) => (inputRefs.current[index] = ref)}
-//                             />
-//                         ))}
-//                     </div>
-
-//                     <button
-//                         onClick={handleVerifyOtp}
-//                         disabled={loading}
-//                         className={`w-full py-3 mt-6 bg-indigo-600 text-white rounded-md font-semibold text-lg transition ${
-//                             loading ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-700"
-//                         }`}
-//                     >
-//                         {loading ? "Verifying..." : "Verify OTP"}
-//                     </button>
-
-//                     <button
-//                         onClick={handleResendOtp}
-//                         className="mt-4 text-indigo-400 hover:text-indigo-600 transition"
-//                         disabled={resend}
-//                     >
-//                         {resend ? "Wait..." : "Resend OTP"}
-//                     </button>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default OtpScreen;
-
-
-
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -374,23 +75,23 @@ const OtpScreen = () => {
             toast.error("Please enter a valid 4-digit OTP");
             return;
         }
-    
+
         setLoading(true);
         try {
             const token = localStorage.getItem('authToken');
             const response = await client.post("/auth/verify-email", { role, otp: otpString }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-    
+            const userRole = response.data.user.role;
+            console.log(response.data.user)
+            console.log(userRole)
             if (response.data.success) {
                 toast.success("OTP verified successfully!");
-    
-                // Redirect to respective dashboard based on role
-                const dashboardPath = role === "admin" ? "/admindashboard" :
-                                      role === "parent" ? "/parentdashboard" :
-                                      "/tutordashboard";
-    
-                navigate(dashboardPath);  
+                navigate(
+                    userRole === "admin" ? "/admindashboard" :
+                        userRole === "parent" ? "/parentdashboard" :
+                            "/tutordashboard"
+                );
             } else {
                 toast.error("Invalid OTP. Please try again.");
             }
@@ -400,7 +101,7 @@ const OtpScreen = () => {
             setLoading(false);
         }
     };
-    
+
     const handleResendOtp = async () => {
         setResend(true);
         try {
@@ -447,9 +148,8 @@ const OtpScreen = () => {
                 <button
                     onClick={handleVerifyOtp}
                     disabled={loading}
-                    className={`w-full py-3 bg-blue-500 text-white rounded-lg font-semibold text-lg transition ${
-                        loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
-                    }`}
+                    className={`w-full py-3 bg-blue-500 text-white rounded-lg font-semibold text-lg transition ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+                        }`}
                 >
                     {loading ? 'Verifying...' : 'Verify OTP'}
                 </button>

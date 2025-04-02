@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { FaUser, FaSearch, FaCalendarAlt, FaEnvelopeOpenText, FaCommentDots, FaBars, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaSearch, FaCalendarAlt, FaEnvelopeOpenText, FaCommentDots, FaBars, FaSignOutAlt, FaCalendarCheck } from "react-icons/fa";
 import Profile from "../../components/Parent/Profile";
 import SearchTutors from "../../components/Parent/SearchTutors";
 import MyBookings from "../../components/Parent/MyBookings";
@@ -9,6 +9,7 @@ import Feedback from "../../components/Parent/Feedback";
 import { selectUser, logout } from "../../redux/features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ParentBooking from "../../components/Parent/Calendar";
 
 const ParentDashboard = () => {
     const [activeTab, setActiveTab] = useState("profile");
@@ -20,6 +21,7 @@ const ParentDashboard = () => {
     const menuItems = [
         { key: "profile", label: "Profile", icon: <FaUser /> },
         { key: "searchTutors", label: "Search Tutors", icon: <FaSearch /> },
+        { key: "bookSessions", label: "Book Sessions", icon: <FaCalendarCheck /> },
         { key: "myBookings", label: "My Bookings", icon: <FaCalendarAlt /> },
         { key: "messages", label: "Messages", icon: <FaEnvelopeOpenText /> },
         { key: "feedback", label: "Feedback", icon: <FaCommentDots /> },
@@ -70,6 +72,7 @@ const ParentDashboard = () => {
                 <div className="mt-4">
                     {activeTab === "profile" && <Profile />}
                     {activeTab === "searchTutors" && <SearchTutors />}
+                    {activeTab === "bookSessions" && <ParentBooking />}
                     {activeTab === "myBookings" && <MyBookings />}
                     {activeTab === "messages" && <Messages />}
                     {activeTab === "feedback" && <Feedback />}

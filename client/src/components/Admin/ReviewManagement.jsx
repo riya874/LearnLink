@@ -17,6 +17,7 @@ const ReviewManagement = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setReviews(response.data);
+            console.log(response.data)
         } catch (error) {
             console.error("Error fetching reviews", error);
         }
@@ -47,8 +48,8 @@ const ReviewManagement = () => {
                         {reviews.map((review) => (
                             <div key={review._id} className="p-4 border rounded-lg bg-white shadow-md flex justify-between items-center">
                                 <div>
-                                    <p className="text-lg font-semibold">Reviewer: {review.user?.name || "Unknown"}</p>
-                                    <p className="text-sm text-gray-600">Tutor: {review.tutor?.name || "Unknown"}</p>
+                                    <p className="text-lg font-semibold">Reviewer: {review.parentId?.userId?.username || "Unknown"}</p>
+                                    <p className="text-sm text-gray-600">Tutor: {review.tutorId?.userId?.username || "Unknown"}</p>
                                     <p className="text-sm text-gray-600">Rating: ⭐ {review.rating}</p>
                                     <p className="text-sm text-gray-600">Comment: {review.comment}</p>
                                     <p className="text-xs text-gray-500">

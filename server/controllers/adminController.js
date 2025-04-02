@@ -28,7 +28,12 @@ exports.deleteUser = async (req, res) => {
 // Get all tutors
 exports.getAllTutors = async (req, res) => {
     try {
-        const tutors = await Tutor.find().populate("userId");
+        const tutors = await Tutor.find()
+            .populate({
+                path: 'userId', // Reference to the User model
+                select: 'username profilePhoto email' // Fetching only username and profilePhoto fields
+            })
+            .exec();
         res.status(200).json(tutors);
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch tutors" });
@@ -45,12 +50,19 @@ exports.deleteTutor = async (req, res) => {
     }
 };
 
-// Get all parents
 exports.getAllParents = async (req, res) => {
     try {
-        const parents = await Parent.find().populate("userId");
-        res.status(200).json(parents);
+        // Fetching all parents and populating userId with username and profilePhoto
+        const parents = await Parent.find()
+            .populate({
+                path: 'userId', // Reference to the User model
+                select: 'username profilePhoto email' // Fetching only username and profilePhoto fields
+            })
+            .exec();
+
+        res.status(200).json(parents); // Returning the populated parents
     } catch (error) {
+        console.error("Error fetching parents:", error);
         res.status(500).json({ error: "Failed to fetch parents" });
     }
 };
@@ -89,12 +101,32 @@ exports.updateSessionStatus = async (req, res) => {
 // Get all reviews
 exports.getAllReviews = async (req, res) => {
     try {
-        const reviews = await Review.find().populate("tutorId parentId");
+        const reviews = await Review.find()
+            .populate({
+                path: 'tutorId',
+                select: 'username profilePhoto',  // Populate tutorId with username and profilePhoto
+                populate: {
+                    path: 'userId',  // If tutorId references userId in the Tutor model
+                    select: 'username profilePhoto'
+                }
+            })
+            .populate({
+                path: 'parentId',
+                select: 'username profilePhoto',  // Populate parentId with username and profilePhoto
+                populate: {
+                    path: 'userId',  // If parentId references userId in the Parent model
+                    select: 'username profilePhoto'
+                }
+            });
+
         res.status(200).json(reviews);
     } catch (error) {
-        res.status(500).json({ error: "Failed to fetch reviews" });
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch reviews' });
     }
 };
+
+
 
 // Delete a review
 exports.deleteReview = async (req, res) => {

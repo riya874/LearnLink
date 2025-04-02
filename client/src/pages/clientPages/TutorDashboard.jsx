@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { FaUser, FaCalendarCheck, FaChalkboardTeacher, FaEnvelope, FaStar, FaBars, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaCalendarCheck, FaChalkboardTeacher, FaEnvelope, FaStar, FaBars, FaSignOutAlt,FaCommentDots } from "react-icons/fa";
 import Profile from "../../components/Tutor/Profile";
 import Availability from "../../components/Tutor/AvailabilityCalendar";
 import { selectUser, logout } from "../../redux/features/auth/authSlice";
@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Sessions from "../../components/Tutor/Sessions";
 import TutorMessages from "../../components/Tutor/TutorMessages";
+import TFeedback from "../../components/Tutor/TFeedback";
+//import Reviews from "../../components/Tutor/Reviews";
 
 const TutorDashboard = () => {
     const [activeTab, setActiveTab] = useState("profile");
@@ -16,13 +18,15 @@ const TutorDashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const tutorId = localStorage.getItem("tutorId");
+    
 
     const menuItems = [
         { key: "profile", label: "Profile", icon: <FaUser /> },
         { key: "availability", label: "Availability", icon: <FaCalendarCheck /> },
         { key: "sessions", label: "Sessions", icon: <FaChalkboardTeacher /> },
         { key: "messages", label: "Messages", icon: <FaEnvelope /> },
-        { key: "reviews", label: "Reviews", icon: <FaStar /> },
+        { key: "tfeedback", label: "Feedback", icon: <FaCommentDots /> },
+       // { key: "reviews", label: "Reviews", icon: <FaStar /> },
     ];
 
     const handleLogout = () => {
@@ -73,6 +77,8 @@ const TutorDashboard = () => {
                     {activeTab === "availability" && <Availability tutorId={tutorId} />}
                     {activeTab === "sessions" && <Sessions />}
                     {activeTab === "messages" && <TutorMessages />}
+                    {activeTab === "tfeedback" && <TFeedback />}
+                   // {activeTab === "reviews" && <Reviews />}
                 </div>
             </div>
         </div>

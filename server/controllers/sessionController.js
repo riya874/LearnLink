@@ -3,6 +3,23 @@ const Tutor = require('../models/Tutor')
 const Parent = require('../models/Parent')
 const User = require('../models/User')
 
+const getAllSessionsForTutor = async (req, res) => {
+    try {
+        const { tutorId, date } = req.query;
+
+        if (!tutorId || !date) {
+            return res.status(400).json({ message: "Tutor ID and date are required" });
+        }
+
+        const sessions = await Session.find({ tutorId, date, status: "Booked" });
+
+        res.status(200).json({ success: true, sessions });
+    } catch (error) {
+        console.error("Error fetching all sessions for tutor:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
 const getSessionsByParent = async (req, res) => {
     try {
         const { parentId } = req.params;
@@ -47,9 +64,7 @@ const getSessionsByTutor = async (req, res) => {
                 if (!parent || !parent.userId) {
                     return { ...session.toObject(), parentDetails: null };
                 }
-                console.log(parent)
                 const user = await User.findById(parent.userId).select("username profilePhoto");
-                console.log(user)
                 return {
                     ...session.toObject(),
                     parentDetails: user
@@ -58,7 +73,6 @@ const getSessionsByTutor = async (req, res) => {
                 };
             })
         );
-        console.log(sessions)
         res.status(200).json({ success: true, sessions: sessionsWithDetails });
     } catch (error) {
         console.error("Error fetching sessions for tutor:", error);
@@ -71,7 +85,6 @@ const getSessionsByTutor = async (req, res) => {
 const bookSession = async (req, res) => {
     try {
         const { tutorId, parentId, childName, subject, date, time } = req.body;
-        console.log(parentId)
         if (!tutorId || !parentId || !date || !time) {
             return res.status(400).json({ message: "All fields are required" });
         }
@@ -124,4 +137,4 @@ const rescheduleSession = async (req, res) => {
     }
 };
 
-module.exports = { rescheduleSession, cancelSession, bookSession, getSessionsByParent, getSessionsByTutor };
+module.exports = { rescheduleSession, cancelSession, bookSession, getSessionsByParent, getSessionsByTutor, getAllSessionsForTutor };

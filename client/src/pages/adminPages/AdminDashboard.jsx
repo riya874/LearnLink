@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { FaUser, FaChalkboardTeacher, FaCommentDots, FaCalendarAlt, FaStar, FaBars, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaChalkboardTeacher, FaCommentDots, FaCalendarAlt, FaStar, FaBars, FaSignOutAlt, FaComment } from "react-icons/fa";
 import UserManagement from "../../Components/Admin/UserManagement";
 import TutorManagement from "../../Components/Admin/TutorManagement";
 import ParentManagement from "../../Components/Admin/ParentManagement";
@@ -10,6 +10,7 @@ import MessageManagement from "../../Components/Admin/MessageManagement";
 import { selectUser, logout } from "../../redux/features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import FeedbackManagement from "../../components/Admin/FeedbackManagement";
 
 const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState("user");
@@ -25,6 +26,7 @@ const AdminDashboard = () => {
         { key: "session", label: "Sessions", icon: <FaCalendarAlt /> },
         { key: "review", label: "Reviews", icon: <FaStar /> },
         { key: "message", label: "Messages", icon: <FaCommentDots /> },
+        { key: "feedback", label: "Feedbacks", icon: <FaComment /> },
     ];
 
     const handleLogout = () => {
@@ -72,6 +74,7 @@ const AdminDashboard = () => {
                     {activeTab === "session" && <SessionManagement />}
                     {activeTab === "review" && <ReviewManagement />}
                     {activeTab === "message" && <MessageManagement />}
+                    {activeTab === "feedback" && <FeedbackManagement />}
                 </div>
             </div>
         </div>

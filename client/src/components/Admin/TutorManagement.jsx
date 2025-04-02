@@ -69,79 +69,7 @@ const TutorManagement = () => {
         <div className="container mx-auto p-4">
             <h2 className="text-2xl font-semibold mb-6 text-center">Tutor Management</h2>
 
-            {/* Add Tutor Form */}
-            {/* <div className="mb-6 p-4 border rounded-lg bg-white shadow-lg">
-                <h3 className="text-xl font-semibold mb-4">Add New Tutor</h3>
-                <div className="space-y-4">
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        value={newTutor.name}
-                        onChange={(e) => setNewTutor({ ...newTutor, name: e.target.value })}
-                        className="w-full p-2 border rounded-lg"
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={newTutor.email}
-                        onChange={(e) => setNewTutor({ ...newTutor, email: e.target.value })}
-                        className="w-full p-2 border rounded-lg"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Subject"
-                        value={newTutor.subject}
-                        onChange={(e) => setNewTutor({ ...newTutor, subject: e.target.value })}
-                        className="w-full p-2 border rounded-lg"
-                    />
-                    <button
-                        onClick={createTutor}
-                        className="w-full bg-blue-600 text-white p-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-blue-700 transition"
-                    >
-                        <FaPlusCircle />
-                        <span>Add Tutor</span>
-                    </button>
-                </div>
-            </div> */}
-
-            {/* Edit Tutor Form */}
-            {/* {editingTutor && (
-                <div className="mb-6 p-4 border rounded-lg bg-white shadow-lg">
-                    <h3 className="text-xl font-semibold mb-4">Edit Tutor</h3>
-                    <div className="space-y-4">
-                        <input
-                            type="text"
-                            placeholder="Name"
-                            value={editingTutor.name}
-                            onChange={(e) => setEditingTutor({ ...editingTutor, name: e.target.value })}
-                            className="w-full p-2 border rounded-lg"
-                        />
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={editingTutor.email}
-                            onChange={(e) => setEditingTutor({ ...editingTutor, email: e.target.value })}
-                            className="w-full p-2 border rounded-lg"
-                        />
-                        <input
-                            type="text"
-                            placeholder="Subject"
-                            value={editingTutor.subject}
-                            onChange={(e) => setEditingTutor({ ...editingTutor, subject: e.target.value })}
-                            className="w-full p-2 border rounded-lg"
-                        />
-                        <button
-                            onClick={() => updateTutor(editingTutor._id, editingTutor)}
-                            className="w-full bg-blue-600 text-white p-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-blue-700 transition"
-                        >
-                            <FaEdit />
-                            <span>Update Tutor</span>
-                        </button>
-                    </div>
-                </div>
-            )} */}
-
-            {/* Tutor List */}
+        
             <div>
                 <h3 className="text-xl font-semibold mb-4">Tutor List</h3>
                 {tutors.length > 0 ? (
@@ -150,19 +78,21 @@ const TutorManagement = () => {
                             <div key={tutor._id} className="p-4 border rounded-lg bg-white shadow-md flex justify-between items-center">
                                 <div className="flex items-center">
                                     <img
-                                        src={tutor.userId.profilePhoto} // Ensure you have the profile photo URL from the backend
-                                        alt={`${tutor.username}'s profile`}
+                                        src={tutor.userId?.profilePhoto || "https://via.placeholder.com/150"} // Fallback if profile photo is missing
+                                        alt={`${tutor.userId?.username || "Unknown"}'s profile`}
                                         className="w-12 h-12 rounded-full mr-4"
                                     />
                                     <div>
-                                        <span className="text-lg font-semibold">{tutor.userId.username}</span>
-                                        <p className="text-sm text-gray-600">{tutor.userId.email}</p>
-                                        <p className="text-sm text-gray-600">{tutor.userId.role}</p>
+                                        <span className="text-lg font-semibold">
+                                            {tutor.userId?.username || "Unknown User"}
+                                        </span>
+                                        <p className="text-sm text-gray-600">{tutor.userId?.email || "Email not available"}</p>
+
                                     </div>
                                 </div>
                                 <div className="flex space-x-4">
                                     <button
-                                        onClick={() => deleteUser(tutor._id)}
+                                        onClick={() => deleteTutor(tutor._id)}
                                         className="text-red-500 hover:text-red-600 transition"
                                     >
                                         <FaTrashAlt />

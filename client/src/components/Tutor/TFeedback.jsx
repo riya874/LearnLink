@@ -5,21 +5,21 @@ import client from "../../lib/axios";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/auth/authSlice";
 
-const Feedback = () => {
+const TFeedback = () => {
     const user = useSelector(selectUser);
     const [feedback, setFeedback] = useState("");
     const [rating, setRating] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [parentInfo, setParentInfo] = useState(null);
+    const [tutorInfo, setTutorInfo] = useState(null);
     const [hoverRating, setHoverRating] = useState(null);
     const [charCount, setCharCount] = useState(0);
     const MAX_CHAR = 200;
 
     useEffect(() => {
         if (user?._id) {
-            client.get(`/parent/${user._id}`)
-                .then(response => setParentInfo(response.data.parent))
-                .catch(error => console.error("Error fetching parent details:", error));
+            client.get(`/tutor/${user._id}`)
+                .then(response => setTutorInfo(response.data.tutor))
+                .catch(error => console.error("Error fetching tutor details:", error));
         }
     }, [user]);
 
@@ -35,8 +35,8 @@ const Feedback = () => {
             return;
         }
 
-        if (!parentInfo?._id) {
-            toast.error("Parent information not found.");
+        if (!tutorInfo?._id) {
+            toast.error("Tutor information not found.");
             return;
         }
 
@@ -44,7 +44,7 @@ const Feedback = () => {
 
         try {
             await client.post("/feedback/submit", {
-                parentId: parentInfo._id,
+                tutorId: tutorInfo._id,
                 feedback,
                 rating,
             });
@@ -121,5 +121,5 @@ const Feedback = () => {
     );
 };
 
-export default Feedback;
+export default TFeedback;
 

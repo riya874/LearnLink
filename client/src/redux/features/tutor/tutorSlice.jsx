@@ -59,5 +59,6 @@ export const selectTutor = (state) => state.tutorProfile;
 export const selectTutorInfo = (state) => state.tutorProfile.tutor;
 //export const selectTutor = (state) => state.tutor; // Ensure this matches the key in the store
 export const selectSubject = (state) => state.tutorProfile.tutor.subjects;
+export const selectLanguage = (state) => state.tutorProfile.tutor.languages;
 
 export default tutorSlice.reducer;

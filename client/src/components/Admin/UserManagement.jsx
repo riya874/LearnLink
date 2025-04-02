@@ -69,73 +69,7 @@ const UserManagement = () => {
         <div className="container mx-auto p-4">
             <h2 className="text-2xl font-semibold mb-6 text-center">User Management</h2>
 
-            {/* Create User Form */}
-            {/* <div className="mb-6 p-4 border rounded-lg bg-white shadow-lg">
-                <h3 className="text-xl font-semibold mb-4">Add New User</h3>
-                <div className="space-y-4">
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={newUser.username}
-                        onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-                        className="w-full p-2 border rounded-lg"
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={newUser.email}
-                        onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                        className="w-full p-2 border rounded-lg"
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={newUser.password}
-                        onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                        className="w-full p-2 border rounded-lg"
-                    />
-                    <button
-                        onClick={createUser}
-                        className="w-full bg-blue-600 text-white p-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-blue-700 transition"
-                    >
-                        <FaPlusCircle />
-                        <span>Create User</span>
-                    </button>
-                </div>
-            </div> */}
-
-            {/* Edit User Form */}
-            {/* {editingUser && (
-                <div className="mb-6 p-4 border rounded-lg bg-white shadow-lg">
-                    <h3 className="text-xl font-semibold mb-4">Edit User</h3>
-                    <div className="space-y-4">
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            value={editingUser.username}
-                            onChange={(e) => setEditingUser({ ...editingUser, username: e.target.value })}
-                            className="w-full p-2 border rounded-lg"
-                        />
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={editingUser.email}
-                            onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                            className="w-full p-2 border rounded-lg"
-                        />
-                        <button
-                            onClick={() => updateUser(editingUser._id, editingUser)}
-                            className="w-full bg-blue-600 text-white p-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-blue-700 transition"
-                        >
-                            <FaEdit />
-                            <span>Update User</span>
-                        </button>
-                    </div>
-                </div>
-            )} */}
-
-            {/* User List */}
-            <div>
+                      <div>
                 <h3 className="text-xl font-semibold mb-4">User List</h3>
                 {users.length > 0 ? (
                     <div className="space-y-4">

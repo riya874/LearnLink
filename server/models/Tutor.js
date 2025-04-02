@@ -12,7 +12,8 @@ const TutorSchema = new mongoose.Schema({
     availability: [{ day: String, timeSlots: [String] }],
     rating: { type: Number, default: 0 },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-    certifications: [{ type: String }]
+    certifications: [{ type: String }],
+    //likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Parent' }]
 });
 
 module.exports = mongoose.model('Tutor', TutorSchema);

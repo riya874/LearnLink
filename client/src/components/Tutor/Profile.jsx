@@ -4,7 +4,7 @@ import { selectUser, login } from "../../redux/features/auth/authSlice";
 import axios from "axios";
 import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaLanguage, FaBook, FaStar, FaEdit, FaSave, FaTimes, FaMapPin, FaFileUpload, FaCamera, FaMapMarkedAlt } from "react-icons/fa";
 import client from "../../lib/axios";
-import { toast } from "react-hot-toast"
+import { toast } from "react-hot-toast";
 import { profile, selectSubject, selectTutorInfo } from "../../redux/features/tutor/tutorSlice";
 
 const Profile = () => {
@@ -43,7 +43,8 @@ const Profile = () => {
                 .catch(error => console.error("Error fetching tutor details:", error));
         }
     }, [user]);
-    localStorage.setItem("tutorId", tutorInfo._id)
+    localStorage.setItem("tutorId", tutorInfo._id);
+
     const handleChange = (e) => {
         setUpdatedData({ ...updatedData, [e.target.name]: e.target.value });
     };
@@ -65,6 +66,13 @@ const Profile = () => {
                 console.error("Error uploading file:", error);
             }
         }
+    };
+    const handleCheckboxChange = (e) => {
+        const { value, checked } = e.target;
+        const updatedGrades = checked
+            ? [...tutorInfo.grades, value]
+            : tutorInfo.grades.filter(grade => grade !== value);
+        setTutorInfo({ ...tutorInfo, grades: updatedGrades });
     };
     const handleProfileUpload = async (e) => {
         const file = e.target.files[0];
@@ -181,7 +189,6 @@ const Profile = () => {
                         </div>
                     ) : (
                         <div>
-                            {/* <p className="text-lg font-semibold flex items-center gap-2"><FaUser /> {user?.username}</p> */}
                             <p className="text-gray-600 flex items-center gap-2"><FaEnvelope /> {user?.email}</p>
                             <p className="text-gray-600 flex items-center gap-2"><FaPhone /> {updatedData.phone || "Not provided"}</p>
                             <p className="text-gray-600 flex items-center gap-2"><FaMapMarkerAlt /> {updatedData.address || "Not provided"}</p>
@@ -213,9 +220,22 @@ const Profile = () => {
                             </div>
 
                             <label>Grades</label>
-                            <div className="flex items-center gap-2 border p-1 w-full mb-2">
+                            {/* <div className="flex items-center gap-2 border p-1 w-full mb-2">
                                 <FaBook />
                                 <input type="text" name="grades" value={tutorInfo.grades} onChange={handleTutorChange} className="border p-1 w-full mb-2" />
+                            </div> */}
+                            <div className="flex flex-wrap gap-4 mb-2">
+                                {["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th "].map((grade) => (
+                                    <label key={grade} className="flex items-center gap-2">
+                                        <input
+                                            type="checkbox"
+                                            value={grade}
+                                            checked={tutorInfo.grades.includes(grade)}
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        {grade}
+                                    </label>
+                                ))}
                             </div>
 
                             <label>Experience</label>
@@ -231,15 +251,47 @@ const Profile = () => {
                             </div>
 
                             <label>Gender</label>
-                            <div className="flex items-center gap-2 border p-1 w-full mb-2">
-                                <FaUser />
-                                <input type="text" name="gender" value={tutorInfo.gender} onChange={handleTutorChange} className="border p-1 w-full mb-2" />
+                            <div className="flex items-center gap-2 mb-4">
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Male"
+                                    checked={tutorInfo.gender === "Male"}
+                                    onChange={handleTutorChange}
+                                    className="mr-2"
+                                />
+                                Male
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Female"
+                                    checked={tutorInfo.gender === "Female"}
+                                    onChange={handleTutorChange}
+                                    className="mr-2 ml-4"
+                                />
+                                Female
                             </div>
 
                             <label>Teaching Methodology</label>
-                            <div className="flex items-center gap-2 border p-1 w-full mb-2">
-                                <FaBook />
-                                <input type="text" name="teachingMethodology" value={tutorInfo.teachingMethodology} onChange={handleTutorChange} className="border p-1 w-full mb-2" />
+                            <div className="flex items-center gap-2 mb-4">
+                                <input
+                                    type="radio"
+                                    name="teachingMethodology"
+                                    value="In-person"
+                                    checked={tutorInfo.teachingMethodology === "In-person"}
+                                    onChange={handleTutorChange}
+                                    className="mr-2"
+                                />
+                                In-person
+                                <input
+                                    type="radio"
+                                    name="teachingMethodology"
+                                    value="Online"
+                                    checked={tutorInfo.teachingMethodology === "Online"}
+                                    onChange={handleTutorChange}
+                                    className="mr-2 ml-4"
+                                />
+                                Online
                             </div>
 
                             <label>Certifications</label>
@@ -279,3 +331,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
+

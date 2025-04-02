@@ -76,7 +76,7 @@ const verifyEmail = async (req, res) => {
         user.verificationToken = undefined;
         user.verificationTokenExpiresAt = undefined;
         await user.save();
-        res.status(200).json({ success: true, message: 'Email verified successfully' });
+        res.status(200).json({ success: true, message: 'Email verified successfully', user });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
@@ -214,6 +214,4 @@ const logout = (req, res) => {
     res.cookie('token', '', { httpOnly: true, expires: new Date(0) });
     res.status(200).json({ message: 'Logged out successfully' });
 };
-
-
 module.exports = { registerUser, verifyEmail, resendVerificationEmail, loginUser, verifyUser, updateUser, forgotPassword, resetPassword, logout };

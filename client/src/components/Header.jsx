@@ -22,7 +22,7 @@ const Header = () => {
         style={{
           position: "sticky",
           top: 0,
-          zIndex: 1000,
+          zIndex: 10,
           backgroundColor: "#ADD8E6",
           boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
         }}
@@ -144,12 +144,12 @@ const Header = () => {
       </header>
 
       {/* {isModalOpen && <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} isSignup={modalType === "signup"} />} */}
-      <AuthModal 
-    isOpen={isModalOpen} 
-    onClose={() => setIsModalOpen(false)} 
-    isSignup={modalType === "signup"}  
-    setIsSignup={(isSignup) => setModalType(isSignup ? "signup" : "login")} // ✅ Correct prop
-/>
+      <AuthModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        isSignup={modalType === "signup"}
+        setIsSignup={(isSignup) => setModalType(isSignup ? "signup" : "login")} // ✅ Correct prop
+      />
 
 
     </>
